@@ -1,0 +1,44 @@
+#inputform{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    width: 30%;
+    padding: 20px 20px;
+    text-align: center;
+    position: fixed;
+    top: 20%;
+    left: 35%;
+}
+input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    margin: 8px 0;
+    border-radius: 4px;
+}
+input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    margin: 8px 0;
+    border-radius: 4px;
+}
+input[type=submit]{
+    width: 100%;
+    background-color: #4CAF50;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+input[type=button]{
+    width: 100%;
+    background-color: #4CAF50;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+input[type=submit]:hover{
+    background-color: #4CCF50;
+}
+input[type=button]:hover{
+    background-color: #4CCF50;
+}

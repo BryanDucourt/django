@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script>
+        function register_post()
+        {
+            var request;
+            if(window.XMLHttpRequest)            //首先创建XHR对象
+            {
+                request = new XMLHttpRequest();  //IE7+,Firefox,Chrome,Qpera,Safari
+            }
+            else
+            {
+                request =new ActiveObject("Microsoft.XMLHTTP");   //兼容IE5,IE6
+            }
+            request.open('POST','/login-post',false)
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.send("name="+document.getElementById('name').value+"&pass="+document.getElementById('pass').value+'&register=register')
+            if (request.readyState===4) {
+                document.getElementById('result').innerHTML = request.responseText;
+            }
+        }
+        function submit_post()
+        {
+            var request;
+            if(window.XMLHttpRequest)            //首先创建XHR对象
+            {
+                request = new XMLHttpRequest();  //IE7+,Firefox,Chrome,Qpera,Safari
+            }
+            else
+            {
+                request =new ActiveObject("Microsoft.XMLHTTP");   //兼容IE5,IE6
+            }
+            request.open('POST','/login-post',false)
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.send("name="+document.getElementById('name').value+"&pass="+document.getElementById('pass').value+'&submit=submit')
+            if (request.readyState===4 && request.responseText !== '1') {
+                document.getElementById('result').innerHTML = request.responseText;
+            }
+            else
+                window.location.href='index.html'
+        }
+    </script>
+</head>
+<body>
+    <div id="inputform">
+        <form >
+            {% csrf_token %}
+            <label for="name">用户名</label>
+            <input type="text" id="name" name="name">
+            <label for="pass">密码</label>
+            <input type="password" id="pass" name="pass">
+            <input type="button" value="submit" name="submit" onclick="submit_post()">
+            <br><br>
+            <input type="button" value="register" name="register" onclick="register_post()">
+            <div id="result"></div>
+        </form>
+
+    </div>
+</body>
+</html>
