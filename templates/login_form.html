@@ -18,7 +18,7 @@
             {
                 request =new ActiveObject("Microsoft.XMLHTTP");   //兼容IE5,IE6
             }
-            request.open('POST','/login-post',false)
+            request.open('POST','/login/register',false)
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.send("name="+document.getElementById('name').value+"&pass="+document.getElementById('pass').value+'&register=register')
             if (request.readyState===4) {
@@ -36,14 +36,14 @@
             {
                 request =new ActiveObject("Microsoft.XMLHTTP");   //兼容IE5,IE6
             }
-            request.open('POST','/login-post',false)
+            request.open('POST','/login/login',false)
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.send("name="+document.getElementById('name').value+"&pass="+document.getElementById('pass').value+'&submit=submit')
             if (request.readyState===4 && request.responseText !== '1') {
                 document.getElementById('result').innerHTML = request.responseText;
             }
             else
-                window.location.href='index.html'
+                window.location.href='mainpage'
         }
     </script>
 </head>

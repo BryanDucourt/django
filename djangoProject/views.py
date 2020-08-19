@@ -6,6 +6,5 @@ def index(request):
     return render(request, 'login_form.html')
 
 
-def login(request):
-    return render(request, 'index.html')
-
+def mainpage(request):
+    return render(request, 'mainpage.html')

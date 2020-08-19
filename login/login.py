@@ -1,15 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from testmodel.models import Test
+from login.models import Login
 import hashlib
-from django.views.decorators.csrf import csrf_exempt
-
-def login(request):
-    return render(request, 'login_form.html')
 
 
 
-@csrf_exempt
 def login_post(request):
     rst = {}
     if request.method == 'POST':
@@ -17,12 +12,12 @@ def login_post(request):
             name = request.POST['name']
             try:
                 p = query(name)
-            except Test.DoesNotExist:
+            except Login.DoesNotExist:
                 rst = '用户不存在！'
                 return HttpResponse(rst)
             else:
                 passwd = hashlib.md5()
-                passwd.update(bytes(request.POST['pass'],encoding='utf-8'))
+                passwd.update(bytes(request.POST['pass'], encoding='utf-8'))
                 if p.passwd != passwd.hexdigest():
                     rst = '密码错误！'
                     return HttpResponse(rst)
@@ -35,19 +30,40 @@ def login_post(request):
 
 
 def query(name):
-    respose=""
-    _list = Test.objects.all()
-    respose = Test.objects.get(name=name)
-    return respose
+    _list = Login.objects.all()
+    response = Login.objects.get(name=name)
+    return response
+
+
+def login(request):
+    name = request.POST['name']
+    try:
+        p = query(name)
+    except Login.DoesNotExist:
+        rst = '用户不存在！'
+        return rst
+    else:
+        passwd = hashlib.md5()
+        passwd.update(bytes(request.POST['pass'], encoding='utf-8'))
+        if p.passwd != passwd.hexdigest():
+            rst = '密码错误！'
+            return rst
+        else:
+            return '1'
+
+
+def register(request):
+    rst = insert(request.POST['name'], request.POST['pass'])
+    return rst
 
 
 def insert(name, passwd):
     try:
-        Test.objects.get(name=name)
-    except Test.DoesNotExist:
+        Login.objects.get(name=name)
+    except Login.DoesNotExist:
         pwd = hashlib.md5()
-        pwd.update(bytes(passwd,encoding='utf-8'))
-        user = Test(name=name, passwd=pwd.hexdigest())
+        pwd.update(bytes(passwd, encoding='utf-8'))
+        user = Login(name=name, passwd=pwd.hexdigest())
         user.save()
         return '注册成功'
     else:
