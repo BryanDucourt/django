@@ -4,31 +4,6 @@ from login.models import Login
 import hashlib
 
 
-
-def login_post(request):
-    rst = {}
-    if request.method == 'POST':
-        if 'submit' in request.POST:
-            name = request.POST['name']
-            try:
-                p = query(name)
-            except Login.DoesNotExist:
-                rst = '用户不存在！'
-                return HttpResponse(rst)
-            else:
-                passwd = hashlib.md5()
-                passwd.update(bytes(request.POST['pass'], encoding='utf-8'))
-                if p.passwd != passwd.hexdigest():
-                    rst = '密码错误！'
-                    return HttpResponse(rst)
-                else:
-                    return HttpResponse("1")
-        elif 'register' in request.POST:
-            rst = insert(request.POST['name'], request.POST['pass'])
-            return HttpResponse(rst)
-    return render(request, 'login_form.html', rst)
-
-
 def query(name):
     _list = Login.objects.all()
     response = Login.objects.get(name=name)

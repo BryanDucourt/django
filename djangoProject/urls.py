@@ -21,7 +21,7 @@ from . import views
 urlpatterns = [
     path('', views.index),
     re_path(r'login', include('login.urls')),
-    path('mainpage.html', views.mainpage)
+    path('mainpage', views.mainpage)
     # path('login', include('login.urls'))
 
 ]
